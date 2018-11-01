@@ -1,3 +1,166 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 7.5.2 (457164)"/><meta name="author" content="perronfrobenius7@gmail.com"/><meta name="created" content="2018-10-31 16:29:43 +0000"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2018-11-01 01:50:22 +0000"/><title>Ass 3 - Wed Nov 7</title></head><body><div><span style="font-weight: bold;"><font style="font-size: 18px;">Assignment 3 - Applied Linear Regression</font></span></div><div><br/></div><div>1) Application of heteroskedasticity tests on MINITAB: </div><div>    a) <span style="font-weight: bold;">Compute the test of White and explain your statistical decision. </span></div><div>    b) <span style="font-weight: bold;">Compute the Goldfeld - Quandt test and explain whether or not you reject the null hypothesis</span>. (choose number of points to remove, c = 4) </div><div><br/></div><div>2) Application of autocorrelation tests on MINITAB: </div><div>    a) Compute Durbin Watson test and the <span style="font-weight: bold; text-decoration: underline;">LM test for autocorrelation.</span> </div><div>    b) Apply Cochrane-Orcutt procedure (only 2 iterations) to estimate the Model. </div><div>    c) Compute again the Durbin Watson test for the transformed model. Was the autocorrelation issue resolved?</div><div><br/></div><div>Helpful links:</div><div/><div>[1] <a href="http://www.michaeljgrogan.com/serial-correlation-and-the-cochrane-orcutt-remedy/">http://www.michaeljgrogan.com/serial-correlation-and-the-cochrane-orcutt-remedy/</a></div><div>[2] <a href="https://www.youtube.com/watch?v=6kXcCfdwSKI">https://www.youtube.com/watch?v=6kXcCfdwSKI</a></div><div><br/></div><div><br/></div><div><br/></div><div><img src="Ass%203%20-%20Wed%20Nov%207.resources/giphy.gif" height="420" width="478"/><span style="font-weight: bold;">  </span><b><img src="Ass%203%20-%20Wed%20Nov%207.resources/giphy%20(1).gif" height="420" width="478"/><br/></b></div><div><br/></div><div><br/></div><div><span style="font-weight: bold;">   </span></div><div><span style="font-style: italic;">Above: Before and after Cochrane-Orcutt remedy. LS fit (left), residuals (right)</span></div><div><br/></div><div><span style="caret-color: rgb(175, 82, 222);"><span style="color: rgb(175, 82, 222); font-family: &quot;Helvetica Neue&quot;; font-weight: bold; text-decoration: underline;"><font style="font-size: 18px;">HOMOSCEDASTICITY</font></span></span></div><hr/><div><br/></div><div><b>Fitting the model: </b></div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);-en-codeblock:true;"><div>&gt; lmtest::bptest(model1, studentize=TRUE)</div><div>Call:</div><div>lm(formula = y ~ x, data = data)</div><div><br/></div><div>Residuals:</div><div>     Min       1Q   Median       3Q      Max </div><div>-2.78843 -1.44242  0.04263  1.32336  2.53848 </div><div><br/></div><div>Coefficients:</div><div>             Estimate Std. Error t value Pr(&gt;|t|)    </div><div>(Intercept) -19.04257    1.02536  -18.57 3.85e-16 ***</div><div>x             0.39013    0.01196   32.63  &lt; 2e-16 ***</div><div>---</div><div>Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div><br/></div><div>Residual standard error: 1.713 on 25 degrees of freedom</div><div>Multiple R-squared:  0.9771,    Adjusted R-squared:  0.9761 </div><div>F-statistic:  1065 on 1 and 25 DF,  p-value: &lt; 2.2e-16</div></div><div><br/></div><div><b><u>Test of White</u></b> is type of B-P Test:</div><div><br/></div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);-en-codeblock:true;"><div>studentized Breusch-Pagan test</div><div><br/></div><div>data:  model1</div><div>BP = 7.7221, df = 1, <font color="#ff3b30">p-value = 0.005455</font></div></div><div><br/></div><ul><li><div>Since the p-value is less than 0.05, we reject the null hypothesis of homoskedasticity</div></li></ul><div><br/></div><div><span style="font-weight: bold; text-decoration: underline;">Goldfeld-Quandt test</span></div><div><br/></div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);-en-codeblock:true;"><div>&gt; lmtest::gqtest(formula = y ~ x, fraction = 4, data = data)</div><div><br/></div><div>    Goldfeld-Quandt test</div><div><br/></div><div>data:  y ~ x</div><div>GQ = 5.7356, df1 = 10, df2 = 9, <font color="#ff3b30">p-value = 0.007417</font></div><div><font color="#007aff">alternative hypothesis: variance increases from segment 1 to 2</font></div></div><div><br/></div><ul><li><div>...</div></li></ul><div><br/></div><div><br/></div><div><br/></div><div><span style="color: rgb(175, 82, 222); font-family: &quot;Helvetica Neue&quot;; font-weight: bold; text-decoration: underline;"><font style="font-size: 18px;">AUTOCORRELATION</font></span></div><hr/><div><br/></div><div><span style="font-family: &quot;Helvetica Neue&quot;; font-weight: bold; text-decoration: underline;">Durbin-Watson Test</span></div><div><br/></div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);-en-codeblock:true;"><div>&gt; lmtest::dwtest(formula = model1, data = data)</div><div><br/></div><div>    Durbin-Watson test</div><div><br/></div><div>data:  model1</div><div>DW = 0.33192, <font style="color: rgb(255, 59, 48);">p-value = 6.346e-10</font></div><div><font color="#007aff">alternative hypothesis: true autocorrelation is greater than 0</font></div></div><div><br/></div><ul><li><div>We test for serial correlation using the Durbin-Watson test and find that the p-value is less than 0.05, indicating possible serial correlation that needs to be corrected.</div></li><li><div>Cochrane-Orcutt remedy only works when data is an AR(1) stationary process</div></li><ul><li><div><span style="color: rgb(162, 132, 94);">"In other words, taking a first difference of the data results in a stationary process whereby the data has a constant mean, variance and autocorrelation." [1]</span></div></li></ul></ul><div><br/></div><div><span style="font-weight: bold; text-decoration: underline;">Cochrane-Orcutt</span></div><div><br/></div><div style="box-sizing: border-box; padding: 8px; font-family: Monaco, Menlo, Consolas, &quot;Courier New&quot;, monospace; font-size: 12px; color: rgb(51, 51, 51); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; background-color: rgb(251, 250, 248); border: 1px solid rgba(0, 0, 0, 0.14902);-en-codeblock:true;"><div>&gt; coch = cochrane.orcutt( lm(y~x,data=data))</div><div>&gt; summary(coch)</div><div>Call:</div><div>lm(formula = y ~ x, data = data)</div><div><br/></div><div><font color="#007aff">              Estimate Std. Error t value  Pr(&gt;|t|)    </font></div><div><font color="#007aff">(Intercept) -19.031124   2.688410  -7.079 2.562e-07 ***</font></div><div><font color="#007aff">x             0.385092   0.025953  14.838 1.375e-13 ***</font></div><div>---</div><div>Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div><br/></div><div>Residual standard error: 0.9323 on 24 degrees of freedom</div><div>Multiple R-squared:  0.9017 ,  Adjusted R-squared:  0.8976</div><div>F-statistic: 220.2 on 1 and 24 DF,  p-value: &lt; 1.375e-13</div><div><br/></div><div><font color="#007aff">Durbin-Watson statistic </font></div><div><font style="color: rgb(0, 122, 255);">(original):    0.33192 , </font><font color="#ff3b30">p-value: 6.346e-10 &lt; 0.05</font></div><div><font color="#007aff">(transformed): 1.76582 , </font><font color="#28cd41">p-value: 2.078e-01 -&gt; 0.2078 &gt; 0.05</font></div></div><div><br/></div><ul><li><div>The transformed Durbin-Watson statistic is greater than 0.05 which means that serial correlation in the model has been removed.</div></li></ul><div><br/></div></body></html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Ass 3 - Wed Nov 7</title>
+  <meta name="Author" content="perronfrobenius7@gmail.com">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1671">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 12.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #0000e9; -webkit-text-stroke: #0000e9}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 15.0px; font: 13.0px Menlo; color: #125eaf; -webkit-text-stroke: #125eaf}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 23.0px; font: 18.0px 'Helvetica Neue'; color: #9d33d6; -webkit-text-stroke: #9d33d6}
+    p.p7 {margin: 0.0px 0.0px 6.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 12.0px}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.0px; font: 12.0px Monaco; color: #262626; -webkit-text-stroke: #262626}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.0px; font: 12.0px Monaco; color: #262626; -webkit-text-stroke: #262626; min-height: 16.0px}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.0px; font: 12.0px Monaco; color: #0a60ff; -webkit-text-stroke: #0a60ff}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 15.0px; font: 12.0px 'Helvetica Neue'; color: #000000; -webkit-text-stroke: #000000}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.0px; font: 12.0px Monaco; color: #fc2125; -webkit-text-stroke: #fc2125}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.0px; font: 12.0px Monaco; color: #29c732; -webkit-text-stroke: #29c732}
+    li.li3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    li.li13 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #90714c; -webkit-text-stroke: #90714c}
+    span.s1 {font-kerning: none}
+    span.s2 {text-decoration: underline ; font-kerning: none}
+    span.s3 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s4 {text-decoration: underline ; font-kerning: none; color: #0000e9; -webkit-text-stroke: 0px #0000e9}
+    span.s5 {font-kerning: none; color: #681a1d; background-color: #ebeced; -webkit-text-stroke: 0px #681a1d}
+    span.s6 {font-kerning: none; color: #242629; background-color: #ebeced; -webkit-text-stroke: 0px #242629}
+    span.s7 {font-kerning: none; color: #dd2c19; background-color: #ebeced; -webkit-text-stroke: 0px #dd2c19}
+    span.s8 {font-kerning: none; background-color: #ebeced}
+    span.s9 {font-kerning: none; background-color: #faf9f6}
+    span.s10 {font-kerning: none; color: #fc2125; background-color: #faf9f6; -webkit-text-stroke: 0px #fc2125}
+    span.s11 {-webkit-text-stroke: 0px #000000}
+    span.s12 {font-kerning: none; color: #262626; background-color: #faf9f6; -webkit-text-stroke: 0px #262626}
+    span.s13 {font-kerning: none; color: #0a60ff; background-color: #faf9f6; -webkit-text-stroke: 0px #0a60ff}
+    ul.ul1 {list-style-type: disc}
+    ul.ul2 {list-style-type: circle}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><b>Assignment 3 - Applied Linear Regression</b></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1">1) Application of heteroskedasticity tests on MINITAB: </span></p>
+<p class="p3"><span class="s1">    a) <b>Compute the test of White and explain your statistical decision. </b></span></p>
+<p class="p3"><span class="s1">    b) <b>Compute the Goldfeld - Quandt test and explain whether or not you reject the null hypothesis</b>. (choose number of points to remove, c = 4) </span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1">2) Application of autocorrelation tests on MINITAB: </span></p>
+<p class="p3"><span class="s1">    a) Compute Durbin Watson test and the </span><span class="s2"><b>LM test for autocorrelation.</b></span><span class="s1"> </span></p>
+<p class="p3"><span class="s1">    b) Apply Cochrane-Orcutt procedure (only 2 iterations) to estimate the Model. </span></p>
+<p class="p3"><span class="s1">    c) Compute again the Durbin Watson test for the transformed model. Was the autocorrelation issue resolved?</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1">Helpful links:</span></p>
+<p class="p4"><span class="s3">[1] <a href="http://www.michaeljgrogan.com/serial-correlation-and-the-cochrane-orcutt-remedy/"><span class="s4">http://www.michaeljgrogan.com/serial-correlation-and-the-cochrane-orcutt-remedy/</span></a></span></p>
+<p class="p4"><span class="s3">[2] <a href="https://www.youtube.com/watch?v=6kXcCfdwSKI"><span class="s4">https://www.youtube.com/watch?v=6kXcCfdwSKI</span></a></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p5"><span class="s5">&lt;img</span><span class="s6"> </span><span class="s7">src</span><span class="s6">=</span><span class="s8">"images/giphy.gif”</span><span class="s6"> </span><span class="s7">alt</span><span class="s6">=</span><span class="s8">"hi"</span><span class="s6"> </span><span class="s7">class</span><span class="s6">=</span><span class="s8">"inline"</span><span class="s5">/&gt;</span></p>
+<p class="p3"><span class="s1"><b>   </b></span></p>
+<p class="p3"><span class="s1"><i>Above: Before and after Cochrane-Orcutt remedy. LS fit (left), residuals (right)</i></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p6"><span class="s2"><b>HOMOSCEDASTICITY</b></span></p>
+<p class="p7"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"><b>Fitting the model: </b></span></p>
+<p class="p8"><span class="s9">&gt; lmtest::bptest(model1, studentize=TRUE)</span></p>
+<p class="p8"><span class="s9">Call:</span></p>
+<p class="p8"><span class="s9">lm(formula = y ~ x, data = data)</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">Residuals:</span></p>
+<p class="p8"><span class="s9">     Min       1Q   Median       3Q      Max<span class="Apple-converted-space"> </span></span></p>
+<p class="p8"><span class="s9">-2.78843 -1.44242  0.04263  1.32336  2.53848<span class="Apple-converted-space"> </span></span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">Coefficients:</span></p>
+<p class="p8"><span class="s9">             Estimate Std. Error t value Pr(&gt;|t|)    </span></p>
+<p class="p8"><span class="s9">(Intercept) -19.04257    1.02536  -18.57 3.85e-16 ***</span></p>
+<p class="p8"><span class="s9">x             0.39013    0.01196   32.63  &lt; 2e-16 ***</span></p>
+<p class="p8"><span class="s9">---</span></p>
+<p class="p8"><span class="s9">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">Residual standard error: 1.713 on 25 degrees of freedom</span></p>
+<p class="p8"><span class="s9">Multiple R-squared:  0.9771,    Adjusted R-squared:  0.9761<span class="Apple-converted-space"> </span></span></p>
+<p class="p8"><span class="s9">F-statistic:  1065 on 1 and 25 DF,  p-value: &lt; 2.2e-16</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s2"><b>Test of White</b></span><span class="s1"> is type of B-P Test:</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">studentized Breusch-Pagan test</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">data:  model1</span></p>
+<p class="p8"><span class="s9">BP = 7.7221, df = 1, </span><span class="s10">p-value = 0.005455</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<ul class="ul1">
+  <li class="li3"><span class="s11"></span><span class="s1">Since the p-value is less than 0.05, we reject the null hypothesis of homoskedasticity<br>
+</span></li>
+</ul>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s2"><b>Goldfeld-Quandt test</b></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">&gt; lmtest::gqtest(formula = y ~ x, fraction = 4, data = data)</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">    Goldfeld-Quandt test</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">data:  y ~ x</span></p>
+<p class="p8"><span class="s9">GQ = 5.7356, df1 = 10, df2 = 9, </span><span class="s10">p-value = 0.007417</span></p>
+<p class="p10"><span class="s9">alternative hypothesis: variance increases from segment 1 to 2</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<ul class="ul1">
+  <li class="li3"><span class="s11"></span><span class="s1">...<br>
+</span></li>
+</ul>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p6"><span class="s2"><b>AUTOCORRELATION</b></span></p>
+<p class="p7"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p11"><span class="s2"><b>Durbin-Watson Test</b></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">&gt; lmtest::dwtest(formula = model1, data = data)</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">    Durbin-Watson test</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">data:  model1</span></p>
+<p class="p12"><span class="s12">DW = 0.33192, </span><span class="s9">p-value = 6.346e-10</span></p>
+<p class="p10"><span class="s9">alternative hypothesis: true autocorrelation is greater than 0</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<ul class="ul1">
+  <li class="li3"><span class="s11"></span><span class="s1">We test for serial correlation using the Durbin-Watson test and find that the p-value is less than 0.05, indicating possible serial correlation that needs to be corrected.<br>
+</span></li>
+  <li class="li3"><span class="s11"></span><span class="s1">Cochrane-Orcutt remedy only works when data is an AR(1) stationary process<br>
+</span></li>
+  <ul class="ul2">
+    <li class="li13"><span class="s11"></span><span class="s1">"In other words, taking a first difference of the data results in a stationary process whereby the data has a constant mean, variance and autocorrelation." [1]</span><span class="s3"><br>
+</span></li>
+  </ul>
+</ul>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s2"><b>Cochrane-Orcutt</b></span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">&gt; coch = cochrane.orcutt( lm(y~x,data=data))</span></p>
+<p class="p8"><span class="s9">&gt; summary(coch)</span></p>
+<p class="p8"><span class="s9">Call:</span></p>
+<p class="p8"><span class="s9">lm(formula = y ~ x, data = data)</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p10"><span class="s9">              Estimate Std. Error t value  Pr(&gt;|t|)    </span></p>
+<p class="p10"><span class="s9">(Intercept) -19.031124   2.688410  -7.079 2.562e-07 ***</span></p>
+<p class="p10"><span class="s9">x             0.385092   0.025953  14.838 1.375e-13 ***</span></p>
+<p class="p8"><span class="s9">---</span></p>
+<p class="p8"><span class="s9">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p8"><span class="s9">Residual standard error: 0.9323 on 24 degrees of freedom</span></p>
+<p class="p8"><span class="s9">Multiple R-squared:  0.9017 ,  Adjusted R-squared:  0.8976</span></p>
+<p class="p8"><span class="s9">F-statistic: 220.2 on 1 and 24 DF,  p-value: &lt; 1.375e-13</span></p>
+<p class="p9"><span class="s1"></span><br></p>
+<p class="p10"><span class="s9">Durbin-Watson statistic<span class="Apple-converted-space"> </span></span></p>
+<p class="p10"><span class="s9">(original):    0.33192 , </span><span class="s10">p-value: 6.346e-10 &lt; 0.05</span></p>
+<p class="p14"><span class="s13">(transformed): 1.76582 , </span><span class="s9">p-value: 2.078e-01 -&gt; 0.2078 &gt; 0.05</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<ul class="ul1">
+  <li class="li3"><span class="s11"></span><span class="s1">The transformed Durbin-Watson statistic is greater than 0.05 which means that serial correlation in the model has been removed.<br>
+</span></li>
+</ul>
+<p class="p2"><span class="s1"></span><br></p>
+</body>
+</html>
